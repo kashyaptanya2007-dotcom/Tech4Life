@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ hospital["name"] }} | Tech4Life</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f8fc;
+            color: #222;
+        }
+        
+        nav {
+            background: #0b5ed7;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 45px auto;
+        }
+        
+        .hospital-header {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+        
+        .hospital-header h1 {
+            color: #0b5ed7;
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        
+        .location {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 25px 18px;
+            text-align: center;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        }
+        
+        .icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .label {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+        
+        .value {
+            font-size: 25px;
+            font-weight: bold;
+            color: #0b5ed7;
+        }
+        
+        .details-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        }
+        
+        .details-box h2 {
+            color: #0b5ed7;
+            margin-bottom: 22px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-title {
+            color: #777;
+        }
+        
+        .detail-value {
+            font-weight: bold;
+            text-align: right;
+        }
+        
+        .available {
+            color: #198754;
+        }
+        
+        .limited {
+            color: #fd7e14;
+        }
+        
+        .no-beds {
+            color: #dc3545;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .primary {
+            background: #0b5ed7;
+            color: white;
+        }
+        
+        .secondary {
+            background: #e9f1ff;
+            color: #0b5ed7;
+        }
+        
+        .primary:hover {
+            background: #084db2;
+        }
+        
+        .secondary:hover {
+            background: #dbe9ff;
+        }
+        
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            nav {
+                justify-content: center;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .container {
+                width: 94%;
+                margin-top: 30px;
+            }
+            .hospital-header h1 {
+                font-size: 26px;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            .detail-row {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .detail-value {
+                text-align: left;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Tech4Life</div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/hospitals">Hospitals</a>
+            <a href="/blood-bank">Blood Bank</a>
+            <a href="/beds">Beds</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/medicines">Medicines</a>
+            <a href="/nearby">Nearby</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="hospital-header">
+            <h1>{{ hospital["name"] }}</h1>
+
+            <div class="location">
+                📍 {{ hospital["location"] }}
+            </div>
+        </div>
+
+        <div class="cards">
+
+            <div class="info-card">
+                <div class="icon">🛏️</div>
+
+                <div class="label">
+                    Total Beds
+                </div>
+
+                <div class="value">
+                    {{ hospital["total_beds"] }}
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="icon">🏥</div>
+
+                <div class="label">
+                    Available Beds
+                </div>
+
+                <div class="value">
+                    {{ hospital["available_beds"] }}
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="icon">👨‍⚕️</div>
+
+                <div class="label">
+                    Doctors
+                </div>
+
+                <div class="value">
+                    {{ hospital["doctors"] }}
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="icon">💊</div>
+
+                <div class="label">
+                    Medicine Status
+                </div>
+
+                <div class="value" style="font-size: 18px;">
+
+                    {% if hospital["medicines"] == "Available" %}
+                    <span class="available">
+                        Available
+                    </span> {% else %}
+                    <span class="limited">
+                        {{ hospital["medicines"] }}
+                    </span> {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="details-box">
+
+            <h2>Hospital Information</h2>
+
+            <div class="detail-row">
+                <div class="detail-title">
+                    Hospital Name
+                </div>
+
+                <div class="detail-value">
+                    {{ hospital["name"] }}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-title">
+                    Location
+                </div>
+
+                <div class="detail-value">
+                    {{ hospital["location"] }}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-title">
+                    Total Beds
+                </div>
+
+                <div class="detail-value">
+                    {{ hospital["total_beds"] }}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-title">
+                    Available Beds
+                </div>
+
+                <div class="detail-value">
+
+                    {% if hospital["available_beds"] == 0 %}
+
+                    <span class="no-beds">
+                        No Beds Available
+                    </span> {% elif hospital["available_beds"]
+                    <=2 %} <span class="limited">
+                        Limited Beds Available
+                        </span>
+
+                        {% else %}
+
+                        <span class="available">
+                        {{ hospital["available_beds"] }} Beds Available
+                    </span> {% endif %}
+
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-title">
+                    Doctors
+                </div>
+
+                <div class="detail-value">
+                    {{ hospital["doctors"] }}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-title">
+                    Medicine Status
+                </div>
+
+                <div class="detail-value">
+                    {{ hospital["medicines"] }}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-title">
+                    Contact Number
+                </div>
+
+                <div class="detail-value">
+                    {{ hospital["phone"] }}
+                </div>
+            </div>
+
+            <div class="actions">
+
+                <a href="/hospitals" class="btn secondary">
+                ← Back to Hospitals
+            </a>
+
+                <a href="/request-blood" class="btn primary">
+                Request Blood
+            </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

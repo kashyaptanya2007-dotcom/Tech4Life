@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if doctor %} Edit Doctor {% else %} Add Doctor {% endif %} - Tech4Life
+    </title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: #f4f7fb;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 60px auto;
+        }
+        
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        h1 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+        
+        input:focus {
+            border-color: #0d47a1;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        
+        button,
+        .cancel {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        button {
+            background: #0d47a1;
+            color: white;
+        }
+        
+        button:hover {
+            background: #083b88;
+        }
+        
+        .cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .cancel:hover {
+            background: #d0d0d0;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                width: 94%;
+                margin: 30px auto;
+            }
+            .card {
+                padding: 25px;
+            }
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            {% if doctor %}
+
+            <h1>Edit Doctor</h1>
+
+            <p class="subtitle">
+                Update doctor information.
+            </p>
+
+            {% else %}
+
+            <h1>Add Doctor</h1>
+
+            <p class="subtitle">
+                Add a new doctor to Tech4Life.
+            </p>
+
+            {% endif %}
+
+
+            <form method="POST" action="{% if doctor %}/admin/doctor/edit/{{ doctor['id'] }}{% else %}/admin/doctor/add{% endif %}">
+
+                <div class="form-group">
+
+                    <label for="name">
+                    Doctor Name
+                </label>
+
+                    <input type="text" id="name" name="name" placeholder="Example: Dr. Rahul Sharma" value="{{ doctor['name'] if doctor else '' }}" required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="specialization">
+                    Specialization
+                </label>
+
+                    <input type="text" id="specialization" name="specialization" placeholder="Example: Cardiologist" value="{{ doctor['specialization'] if doctor else '' }}" required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="hospital">
+                    Hospital
+                </label>
+
+                    <input type="text" id="hospital" name="hospital" placeholder="Example: Max Super Speciality Hospital" value="{{ doctor['hospital'] if doctor else '' }}" required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="location">
+                    Location
+                </label>
+
+                    <input type="text" id="location" name="location" placeholder="Example: Rajpur Road, Dehradun" value="{{ doctor['location'] if doctor else '' }}" required>
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <button type="submit">
+
+                    {% if doctor %}
+                        Update Doctor
+                    {% else %}
+                        Add Doctor
+                    {% endif %}
+
+                </button>
+
+                    <a href="/admin" class="cancel">
+                    Cancel
+                </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

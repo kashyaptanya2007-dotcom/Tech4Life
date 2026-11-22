@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Available Beds | Tech4Life</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f8fc;
+            color: #222;
+        }
+        
+        nav {
+            background: #0b5ed7;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 45px auto;
+        }
+        
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        
+        .heading h1 {
+            color: #0b5ed7;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+        
+        .heading p {
+            color: #666;
+        }
+        
+        .beds-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        
+        .bed-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+        }
+        
+        .bed-card h2 {
+            color: #0b5ed7;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .location {
+            color: #666;
+            margin-bottom: 22px;
+        }
+        
+        .bed-number {
+            text-align: center;
+            background: #f5f8fc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        
+        .available-number {
+            font-size: 38px;
+            font-weight: bold;
+            color: #198754;
+        }
+        
+        .available-label {
+            color: #777;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .total {
+            text-align: center;
+            color: #555;
+            margin-bottom: 18px;
+        }
+        
+        .status {
+            display: block;
+            text-align: center;
+            padding: 9px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+        
+        .available {
+            background: #d1e7dd;
+            color: #146c43;
+        }
+        
+        .limited {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .none {
+            background: #f8d7da;
+            color: #842029;
+        }
+        
+        .details-btn {
+            display: block;
+            text-align: center;
+            background: #0b5ed7;
+            color: white;
+            text-decoration: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .details-btn:hover {
+            background: #084db2;
+        }
+        
+        .no-result {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 45px;
+            text-align: center;
+            border-radius: 15px;
+            color: #777;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #0b5ed7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 950px) {
+            .beds-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 650px) {
+            nav {
+                justify-content: center;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .container {
+                width: 94%;
+                margin-top: 30px;
+            }
+            .heading h1 {
+                font-size: 28px;
+            }
+            .beds-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Tech4Life</div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/hospitals">Hospitals</a>
+            <a href="/blood-bank">Blood Bank</a>
+            <a href="/beds">Beds</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/medicines">Medicines</a>
+            <a href="/nearby">Nearby</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="heading">
+            <h1>Available Hospital Beds</h1>
+            <p>Check current bed availability in Dehradun hospitals</p>
+        </div>
+
+        <div class="beds-grid">
+
+            {% for hospital in hospitals %}
+
+            <div class="bed-card">
+
+                <h2>
+                    {{ hospital["name"] }}
+                </h2>
+
+                <div class="location">
+                    📍 {{ hospital["location"] }}
+                </div>
+
+                <div class="bed-number">
+
+                    <div class="available-number">
+                        {{ hospital["available_beds"] }}
+                    </div>
+
+                    <div class="available-label">
+                        Available Beds
+                    </div>
+
+                </div>
+
+                <div class="total">
+                    Total Beds:
+                    <strong>{{ hospital["total_beds"] }}</strong>
+                </div>
+
+                {% if hospital["available_beds"] == 0 %}
+
+                <span class="status none">
+                    No Beds Available
+                </span> {% elif hospital["available_beds"]
+                <=2 %} <span class="status limited">
+                    Limited Beds Available
+                    </span>
+
+                    {% else %}
+
+                    <span class="status available">
+                    Beds Available
+                </span> {% endif %}
+
+                    <a href="/hospital/{{ hospital['id'] }}" class="details-btn">
+                View Hospital Details
+            </a>
+
+            </div>
+
+            {% else %}
+
+            <div class="no-result">
+                <h2>No hospital bed information available</h2>
+
+                <p style="margin-top: 10px;">
+                    Please check again later.
+                </p>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <a href="/" class="back-link">
+        ← Back to Home
+    </a>
+
+    </div>
+
+</body>
+
+</html>

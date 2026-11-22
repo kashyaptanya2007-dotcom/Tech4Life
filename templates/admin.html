@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech4Life Admin Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: #f4f7fb;
+            color: #333;
+        }
+        
+        nav {
+            background: #0b5ed7;
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        nav h2 {
+            font-size: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: bold;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1250px;
+            margin: 30px auto;
+        }
+        
+        .heading {
+            margin-bottom: 25px;
+        }
+        
+        .heading h1 {
+            color: #0b5ed7;
+            margin-bottom: 8px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+            border-left: 5px solid #0b5ed7;
+        }
+        
+        .stat-card h3 {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        
+        .stat-card p {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0b5ed7;
+        }
+        
+        .pending-card {
+            display: block;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left-color: #dc3545;
+        }
+        
+        .pending-card p {
+            color: #dc3545;
+        }
+        
+        .pending-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        }
+        
+        .pending-card small {
+            display: block;
+            margin-top: 12px;
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .section {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            scroll-margin-top: 20px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .section h2 {
+            color: #0b5ed7;
+            font-size: 22px;
+        }
+        
+        .add-btn {
+            background: #198754;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .add-btn:hover {
+            background: #146c43;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+        
+        th,
+        td {
+            padding: 13px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        th {
+            background: #edf4ff;
+            color: #0b5ed7;
+        }
+        
+        .action-btn {
+            display: inline-block;
+            padding: 7px 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        
+        .edit-btn {
+            background: #0d6efd;
+        }
+        
+        .delete-btn {
+            background: #dc3545;
+        }
+        
+        .approve-btn {
+            background: #198754;
+        }
+        
+        .reject-btn {
+            background: #dc3545;
+        }
+        
+        .complete-btn {
+            background: #6f42c1;
+        }
+        
+        .status {
+            font-weight: bold;
+        }
+        
+        .pending {
+            color: #dc3545;
+        }
+        
+        .approved {
+            color: #198754;
+        }
+        
+        .rejected {
+            color: #dc3545;
+        }
+        
+        .completed {
+            color: #6f42c1;
+        }
+        
+        .info {
+            background: #e7f1ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            color: #084298;
+            line-height: 1.5;
+        }
+        
+        .empty {
+            padding: 20px;
+            color: #777;
+            text-align: center;
+        }
+        
+        @media(max-width: 600px) {
+            nav {
+                flex-direction: column;
+            }
+            nav a {
+                margin: 5px;
+            }
+            .container {
+                width: 94%;
+            }
+            .section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <h2>Tech4Life Admin</h2>
+
+        <div>
+            <a href="/">View Website</a>
+            <a href="/admin/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="heading">
+            <h1>Admin Dashboard</h1>
+            <p>Manage hospitals, blood stock, requests, medicines and doctors.</p>
+        </div>
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <h3>Total Hospitals</h3>
+                <p>{{ total_hospitals }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Blood Groups</h3>
+                <p>{{ total_blood_groups }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Blood Units</h3>
+                <p>{{ total_blood_units }}</p>
+            </div>
+
+            <a href="#blood-requests" class="stat-card pending-card">
+                <h3>Pending Requests</h3>
+                <p>{{ pending_requests }}</p>
+                <small>Click here to view requests ↓</small>
+            </a>
+
+        </div>
+
+        <div class="info">
+            <strong>Important:</strong> When a blood request is approved, the requested units are automatically deducted from available blood stock.
+        </div>
+
+        <!-- HOSPITAL MANAGEMENT -->
+
+        <section class="section" id="hospitals">
+            <div class="section-header">
+                <h2>Hospital Management</h2>
+                <a href="/admin/hospital/add" class="add-btn">+ Add Hospital</a>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Total Beds</th>
+                        <th>Available Beds</th>
+                        <th>Doctors</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    {% for hospital in hospitals %}
+                    <tr>
+                        <td>{{ hospital["name"] }}</td>
+                        <td>{{ hospital["location"] }}</td>
+                        <td>{{ hospital["total_beds"] }}</td>
+                        <td>{{ hospital["available_beds"] }}</td>
+                        <td>{{ hospital["doctors"] }}</td>
+                        <td>{{ hospital["phone"] }}</td>
+                        <td>
+                            <a href="/admin/hospital/edit/{{ hospital['id'] }}" class="action-btn edit-btn">Edit</a>
+
+                            <form method="POST" action="/admin/hospital/delete/{{ hospital['id'] }}" style="display:inline;" onsubmit="return confirm('Delete this hospital?');">
+
+                                <button type="submit" class="action-btn delete-btn">
+                                Delete
+                            </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="empty">No hospitals found.</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+
+        <!-- BLOOD STOCK MANAGEMENT -->
+
+        <section class="section" id="blood-stock">
+            <div class="section-header">
+                <h2>Blood Stock Management</h2>
+                <a href="/admin/blood/add" class="add-btn">+ Add Blood Stock</a>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Blood Group</th>
+                        <th>Available Units</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    {% for blood in blood_groups %}
+                    <tr>
+                        <td>{{ blood["blood_group"] }}</td>
+                        <td>{{ blood["units"] }}</td>
+                        <td>
+                            {% if blood["units"] == 0 %}
+                            <span class="status rejected">Out of Stock</span> {% elif blood["units"]
+                            <=5 %} <span class="status pending">Low Stock</span>
+                                {% else %}
+                                <span class="status approved">Available</span> {% endif %}
+                        </td>
+                        <td>
+                            <a href="/admin/blood/edit/{{ blood['id'] }}" class="action-btn edit-btn">Edit</a>
+
+                            <form method="POST" action="/admin/blood/delete/{{ blood['id'] }}" style="display:inline;" onsubmit="return confirm('Delete this blood group?');">
+
+                                <button type="submit" class="action-btn delete-btn">
+                                Delete
+                            </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="empty">No blood stock found.</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+
+        <!-- BLOOD REQUESTS -->
+
+        <section class="section" id="blood-requests">
+            <div class="section-header">
+                <h2>Blood Requests</h2>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Blood Group</th>
+                        <th>Units</th>
+                        <th>Phone</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    {% for req in blood_requests %}
+                    <tr>
+                        <td>{{ req["patient_name"] }}</td>
+                        <td>{{ req["blood_group"] }}</td>
+                        <td>{{ req["units"] }}</td>
+                        <td>{{ req["phone"] }}</td>
+                        <td>{{ req["location"] }}</td>
+
+                        <td>
+                            <span class="status {{ req['status']|lower }}">
+                            {{ req["status"] }}
+                        </span>
+                        </td>
+
+                        <td>
+                            {% if req["status"] == "Pending" %}
+
+                            <form method="POST" action="/admin/request/{{ req['id'] }}/approve" style="display:inline;">
+
+                                <button type="submit" class="action-btn approve-btn">
+                                Approve
+                            </button>
+                            </form>
+
+                            <form method="POST" action="/admin/request/{{ req['id'] }}/reject" style="display:inline;">
+
+                                <button type="submit" class="action-btn reject-btn">
+                                Reject
+                            </button>
+                            </form>
+
+                            {% elif req["status"] == "Approved" %}
+
+                            <form method="POST" action="/admin/request/{{ req['id'] }}/complete" style="display:inline;">
+
+                                <button type="submit" class="action-btn complete-btn">
+                                Complete
+                            </button>
+                            </form>
+
+                            {% else %} - {% endif %}
+                        </td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="empty">No blood requests found.</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+
+        <!-- MEDICINE MANAGEMENT -->
+
+        <section class="section" id="medicines">
+            <div class="section-header">
+                <h2>Medicine Management</h2>
+                <a href="/admin/medicine/add" class="add-btn">+ Add Medicine</a>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Medicine Name</th>
+                        <th>Category</th>
+                        <th>Availability</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    {% for medicine in medicines %}
+                    <tr>
+                        <td>{{ medicine["name"] }}</td>
+                        <td>{{ medicine["category"] }}</td>
+                        <td>{{ medicine["availability"] }}</td>
+                        <td>
+                            <a href="/admin/medicine/edit/{{ medicine['id'] }}" class="action-btn edit-btn">Edit</a>
+
+                            <form method="POST" action="/admin/medicine/delete/{{ medicine['id'] }}" style="display:inline;" onsubmit="return confirm('Delete this medicine?');">
+
+                                <button type="submit" class="action-btn delete-btn">
+                                Delete
+                            </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="empty">No medicines found.</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+
+        <!-- DOCTOR MANAGEMENT -->
+
+        <section class="section" id="doctors">
+            <div class="section-header">
+                <h2>Doctor Management</h2>
+                <a href="/admin/doctor/add" class="add-btn">+ Add Doctor</a>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Doctor Name</th>
+                        <th>Specialization</th>
+                        <th>Hospital</th>
+                        <th>Location</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    {% for doctor in doctors %}
+                    <tr>
+                        <td>{{ doctor["name"] }}</td>
+                        <td>{{ doctor["specialization"] }}</td>
+                        <td>{{ doctor["hospital"] }}</td>
+                        <td>{{ doctor["location"] }}</td>
+                        <td>
+                            <a href="/admin/doctor/edit/{{ doctor['id'] }}" class="action-btn edit-btn">Edit</a>
+
+                            <form method="POST" action="/admin/doctor/delete/{{ doctor['id'] }}" style="display:inline;" onsubmit="return confirm('Delete this doctor?');">
+
+                                <button type="submit" class="action-btn delete-btn">
+                                Delete
+                            </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="empty">No doctors found.</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+
+</html>

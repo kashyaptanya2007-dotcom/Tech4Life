@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors - Tech4Life</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f8fb;
+            color: #1f2937;
+        }
+        
+        nav {
+            background: #0f766e;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+        
+        .heading {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .heading h1 {
+            color: #0f766e;
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+        
+        .heading p {
+            color: #64748b;
+        }
+        
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        form {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        input,
+        select {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        input:focus,
+        select:focus {
+            border-color: #0f766e;
+        }
+        
+        button {
+            background: #0f766e;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #115e59;
+        }
+        
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        
+        .doctor-card {
+            background: white;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: 0.2s;
+        }
+        
+        .doctor-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .doctor-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #dff7f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .doctor-card h2 {
+            color: #0f766e;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .specialization {
+            color: #334155;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .info {
+            margin: 9px 0;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .info strong {
+            color: #334155;
+        }
+        
+        .empty {
+            background: white;
+            padding: 35px;
+            text-align: center;
+            border-radius: 12px;
+            color: #64748b;
+        }
+        
+        .back {
+            display: inline-block;
+            margin-top: 30px;
+            color: #0f766e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 900px) {
+            .doctors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                width: 92%;
+            }
+            .doctors-grid {
+                grid-template-columns: 1fr;
+            }
+            .heading h1 {
+                font-size: 28px;
+            }
+            nav {
+                padding: 15px 5%;
+            }
+            .nav-links {
+                gap: 12px;
+            }
+            input,
+            select,
+            button {
+                width: 100%;
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/" class="logo">Tech4Life</a>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/hospitals">Hospitals</a>
+            <a href="/blood-bank">Blood Bank</a>
+            <a href="/beds">Beds</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/medicines">Medicines</a>
+            <a href="/nearby">Nearby</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="heading">
+            <h1>Find Doctors</h1>
+            <p>Search doctors by name or specialization</p>
+        </div>
+
+        <div class="search-box">
+            <form method="GET" action="/doctors">
+
+                <input type="text" name="search" placeholder="Search doctor..." value="{{ search or '' }}">
+
+                <select name="specialization">
+                <option value="">All Specializations</option>
+
+                <option value="General Physician"
+                    {% if specialization == "General Physician" %}selected{% endif %}>
+                    General Physician
+                </option>
+
+                <option value="Cardiologist"
+                    {% if specialization == "Cardiologist" %}selected{% endif %}>
+                    Cardiologist
+                </option>
+
+                <option value="Orthopedic"
+                    {% if specialization == "Orthopedic" %}selected{% endif %}>
+                    Orthopedic
+                </option>
+
+                <option value="Gynecologist"
+                    {% if specialization == "Gynecologist" %}selected{% endif %}>
+                    Gynecologist
+                </option>
+
+                <option value="Pediatrician"
+                    {% if specialization == "Pediatrician" %}selected{% endif %}>
+                    Pediatrician
+                </option>
+
+                <option value="Dermatologist"
+                    {% if specialization == "Dermatologist" %}selected{% endif %}>
+                    Dermatologist
+                </option>
+            </select>
+
+                <button type="submit">Search</button>
+
+            </form>
+        </div>
+
+        {% if doctors %}
+
+        <div class="doctors-grid">
+
+            {% for doctor in doctors %}
+
+            <div class="doctor-card">
+
+                <div class="doctor-icon">👨‍⚕️</div>
+
+                <h2>{{ doctor["name"] }}</h2>
+
+                <div class="specialization">
+                    {{ doctor["specialization"] }}
+                </div>
+
+                <div class="info">
+                    <strong>Hospital:</strong><br> {{ doctor["hospital"] }}
+                </div>
+
+                <div class="info">
+                    <strong>Location:</strong><br> {{ doctor["location"] }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+            <h3>No doctors found</h3>
+            <p>Try searching with another doctor name or specialization.</p>
+        </div>
+
+        {% endif %}
+
+        <a href="/" class="back">← Back to Home</a>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Healthcare - Tech4Life</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f8fb;
+            color: #1f2937;
+        }
+        
+        nav {
+            background: #0f766e;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+        
+        .heading {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .heading h1 {
+            color: #0f766e;
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+        
+        .heading p {
+            color: #64748b;
+        }
+        
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-box input:focus {
+            border-color: #0f766e;
+        }
+        
+        .places {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        
+        .place-card {
+            background: white;
+            border-radius: 14px;
+            padding: 23px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: 0.2s;
+        }
+        
+        .place-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .icon {
+            width: 58px;
+            height: 58px;
+            background: #dff7f5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 15px;
+        }
+        
+        .place-card h2 {
+            color: #0f766e;
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+        
+        .type {
+            color: #475569;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .info {
+            color: #64748b;
+            font-size: 14px;
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        
+        .status {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 7px 12px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .no-result {
+            display: none;
+            background: white;
+            padding: 35px;
+            text-align: center;
+            border-radius: 12px;
+            color: #64748b;
+        }
+        
+        .back {
+            display: inline-block;
+            margin-top: 30px;
+            color: #0f766e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 900px) {
+            .places {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                width: 92%;
+            }
+            .places {
+                grid-template-columns: 1fr;
+            }
+            .heading h1 {
+                font-size: 28px;
+            }
+            nav {
+                padding: 15px 5%;
+            }
+            .nav-links {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/" class="logo">Tech4Life</a>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/hospitals">Hospitals</a>
+            <a href="/blood-bank">Blood Bank</a>
+            <a href="/beds">Beds</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/medicines">Medicines</a>
+            <a href="/nearby">Nearby</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="heading">
+            <h1>Nearby Healthcare</h1>
+            <p>Find healthcare facilities around Dehradun</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search by hospital, area or type..." onkeyup="searchPlaces()">
+        </div>
+
+        <div class="places" id="placesContainer">
+
+            <div class="place-card">
+                <div class="icon">🏥</div>
+
+                <h2>Prem Nagar Community Hospital</h2>
+
+                <div class="type">Hospital</div>
+
+                <div class="info">
+                    📍 Prem Nagar, Dehradun
+                </div>
+
+                <div class="info">
+                    📞 +91 9876543213
+                </div>
+
+                <div class="info">
+                    📏 Approx. 1.2 km
+                </div>
+
+                <span class="status">Open</span>
+            </div>
+
+
+            <div class="place-card">
+                <div class="icon">🏥</div>
+
+                <h2>Selaqui Healthcare Centre</h2>
+
+                <div class="type">Healthcare Centre</div>
+
+                <div class="info">
+                    📍 Selaqui, Dehradun
+                </div>
+
+                <div class="info">
+                    📞 +91 9876543214
+                </div>
+
+                <div class="info">
+                    📏 Approx. 2.5 km
+                </div>
+
+                <span class="status">Open</span>
+            </div>
+
+
+            <div class="place-card">
+                <div class="icon">🏥</div>
+
+                <h2>Max Super Speciality Hospital</h2>
+
+                <div class="type">Multi-Speciality Hospital</div>
+
+                <div class="info">
+                    📍 Rajpur Road, Dehradun
+                </div>
+
+                <div class="info">
+                    📞 +91 9876543210
+                </div>
+
+                <div class="info">
+                    📏 Approx. 4.8 km
+                </div>
+
+                <span class="status">Open</span>
+            </div>
+
+
+            <div class="place-card">
+                <div class="icon">🏥</div>
+
+                <h2>Shri Mahant Indiresh Hospital</h2>
+
+                <div class="type">Hospital</div>
+
+                <div class="info">
+                    📍 Patel Nagar, Dehradun
+                </div>
+
+                <div class="info">
+                    📞 +91 9876543211
+                </div>
+
+                <div class="info">
+                    📏 Approx. 5.2 km
+                </div>
+
+                <span class="status">Open</span>
+            </div>
+
+
+            <div class="place-card">
+                <div class="icon">🏥</div>
+
+                <h2>Clement Town Hospital</h2>
+
+                <div class="type">Hospital</div>
+
+                <div class="info">
+                    📍 Clement Town, Dehradun
+                </div>
+
+                <div class="info">
+                    📞 +91 9876543215
+                </div>
+
+                <div class="info">
+                    📏 Approx. 6.1 km
+                </div>
+
+                <span class="status">Open</span>
+            </div>
+
+
+            <div class="place-card">
+                <div class="icon">🏥</div>
+
+                <h2>Doon Hospital</h2>
+
+                <div class="type">Government Hospital</div>
+
+                <div class="info">
+                    📍 Haridwar Road, Dehradun
+                </div>
+
+                <div class="info">
+                    📞 +91 9876543212
+                </div>
+
+                <div class="info">
+                    📏 Approx. 6.8 km
+                </div>
+
+                <span class="status">Open</span>
+            </div>
+
+
+            <div class="place-card">
+                <div class="icon">🏥</div>
+
+                <h2>ISBT Healthcare Point</h2>
+
+                <div class="type">Healthcare Centre</div>
+
+                <div class="info">
+                    📍 ISBT, Dehradun
+                </div>
+
+                <div class="info">
+                    📞 +91 9876543220
+                </div>
+
+                <div class="info">
+                    📏 Approx. 7.0 km
+                </div>
+
+                <span class="status">Open</span>
+            </div>
+
+        </div>
+
+        <div class="no-result" id="noResult">
+            <h3>No healthcare facility found</h3>
+            <p>Try searching with another hospital name or area.</p>
+        </div>
+
+        <a href="/" class="back">← Back to Home</a>
+
+    </div>
+
+    <script>
+        function searchPlaces() {
+
+            const input = document.getElementById("searchInput");
+            const searchText = input.value.toLowerCase();
+
+            const cards = document.querySelectorAll(".place-card");
+            let visibleCount = 0;
+
+            cards.forEach(function(card) {
+
+                const text = card.innerText.toLowerCase();
+
+                if (text.includes(searchText)) {
+                    card.style.display = "block";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+
+            });
+
+            const noResult = document.getElementById("noResult");
+
+            if (visibleCount === 0) {
+                noResult.style.display = "block";
+            } else {
+                noResult.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

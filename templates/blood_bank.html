@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blood Bank | Tech4Life</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f8fc;
+            color: #222;
+        }
+        
+        nav {
+            background: #0b5ed7;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 45px auto;
+        }
+        
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        
+        .heading h1 {
+            color: #0b5ed7;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+        
+        .heading p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .blood-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+        
+        .blood-card {
+            background: white;
+            border-radius: 15px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid #dc3545;
+            transition: 0.2s;
+        }
+        
+        .blood-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .blood-group {
+            font-size: 32px;
+            font-weight: bold;
+            color: #dc3545;
+            margin-bottom: 12px;
+        }
+        
+        .units {
+            font-size: 27px;
+            font-weight: bold;
+            color: #222;
+        }
+        
+        .unit-text {
+            color: #777;
+            margin-top: 4px;
+            font-size: 14px;
+        }
+        
+        .status {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .available {
+            background: #d1e7dd;
+            color: #146c43;
+        }
+        
+        .low {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .out {
+            background: #f8d7da;
+            color: #842029;
+        }
+        
+        .request-section {
+            margin-top: 45px;
+            background: #0b5ed7;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .request-section h2 {
+            margin-bottom: 10px;
+        }
+        
+        .request-section p {
+            margin-bottom: 20px;
+        }
+        
+        .request-btn {
+            display: inline-block;
+            background: white;
+            color: #0b5ed7;
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .request-btn:hover {
+            background: #f1f1f1;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #0b5ed7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 900px) {
+            .blood-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            nav {
+                justify-content: center;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .container {
+                width: 94%;
+                margin-top: 30px;
+            }
+            .heading h1 {
+                font-size: 28px;
+            }
+            .blood-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Tech4Life</div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/hospitals">Hospitals</a>
+            <a href="/blood-bank">Blood Bank</a>
+            <a href="/beds">Beds</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/medicines">Medicines</a>
+            <a href="/nearby">Nearby</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="heading">
+            <h1>Blood Bank</h1>
+            <p>Check available blood groups and units</p>
+        </div>
+
+        <div class="blood-grid">
+
+            {% for blood_group in blood_groups %}
+
+            <div class="blood-card">
+
+                <div class="blood-group">
+                    {{ blood_group["blood_group"] }}
+                </div>
+
+                <div class="units">
+                    {{ blood_group["units"] }}
+                </div>
+
+                <div class="unit-text">
+                    Units Available
+                </div>
+
+                {% if blood_group["units"] == 0 %}
+
+                <span class="status out">
+                    Out of Stock
+                </span> {% elif blood_group["units"]
+                <=5 %} <span class="status low">
+                    Low Stock
+                    </span>
+
+                    {% else %}
+
+                    <span class="status available">
+                    Available
+                </span> {% endif %}
+
+            </div>
+
+            {% else %}
+
+            <div style="
+            grid-column: 1 / -1;
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            color: #777;
+        ">
+                No blood stock information available.
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="request-section">
+            <h2>Need Blood?</h2>
+
+            <p>
+                Submit a blood request through the Tech4Life system.
+            </p>
+
+            <a href="/request-blood" class="request-btn">
+            Request Blood
+        </a>
+        </div>
+
+        <a href="/" class="back-link">
+        ← Back to Home
+    </a>
+
+    </div>
+
+</body>
+
+</html>

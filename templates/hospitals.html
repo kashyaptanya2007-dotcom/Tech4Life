@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tech4Life | Hospitals</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: #f4f8fb;
+            color: #1f2937;
+        }
+        
+        nav {
+            background: #0b7285;
+            color: white;
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+        
+        nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #e6f7fa, #ffffff);
+            text-align: center;
+            padding: 55px 20px;
+        }
+        
+        .hero h1 {
+            color: #075985;
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+        
+        .hero p {
+            color: #64748b;
+            font-size: 17px;
+        }
+        
+        .container {
+            width: 85%;
+            margin: 40px auto;
+        }
+        
+        .container h2 {
+            text-align: center;
+            color: #075985;
+            margin-bottom: 25px;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            margin-bottom: 35px;
+        }
+        
+        .search-section label {
+            display: block;
+            font-weight: bold;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-box:focus {
+            border-color: #0b7285;
+        }
+        
+        .search-info {
+            margin-top: 10px;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .hospital-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .hospital-card {
+            background: white;
+            padding: 30px 22px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+        
+        .hospital-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .hospital-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+        
+        .hospital-card h3 {
+            color: #0b7285;
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+        
+        .hospital-card p {
+            color: #64748b;
+            margin: 9px 0;
+            line-height: 1.5;
+        }
+        
+        .resource {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .resource p {
+            margin: 7px 0;
+        }
+        
+        .status {
+            color: #15803d;
+            font-weight: bold;
+        }
+        
+        .limited {
+            color: #b45309;
+            font-weight: bold;
+        }
+        
+        .phone {
+            color: #0369a1 !important;
+            font-weight: bold;
+        }
+        
+        .details-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px 15px;
+            background: #0b7285;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        
+        .details-btn:hover {
+            background: #075985;
+        }
+        
+        .no-result {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            color: #64748b;
+        }
+        
+        .no-result h3 {
+            color: #075985;
+            margin-bottom: 10px;
+        }
+        
+        .back {
+            display: block;
+            width: fit-content;
+            margin: 40px auto;
+            background: #0b7285;
+            color: white;
+            padding: 13px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+        
+        footer {
+            background: #083344;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+        }
+        
+        footer p {
+            margin: 5px;
+        }
+        
+        @media (max-width: 950px) {
+            .hospital-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            nav {
+                padding: 15px 20px;
+            }
+            nav a {
+                margin-left: 10px;
+                font-size: 14px;
+            }
+            .hospital-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                width: 92%;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <nav>
+
+        <div class="logo">
+            TECH4LIFE
+        </div>
+
+        <div>
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/hospitals">
+                Hospitals
+            </a>
+
+            <a href="/blood-bank">
+                Blood Bank
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="hero">
+
+        <h1>
+            🏥 Hospitals
+        </h1>
+
+        <p>
+            Find hospitals and check their available healthcare resources.
+        </p>
+
+    </section>
+
+
+    <div class="container">
+
+        <h2>
+            Hospitals in Dehradun
+        </h2>
+
+
+        <div class="search-section">
+
+            <label for="hospitalSearch">
+                🔍 Search Hospital or Area
+            </label>
+
+            <input type="text" id="hospitalSearch" class="search-box" placeholder="Example: Prem Nagar, Selaqui, Rajpur Road..." onkeyup="searchHospitals()">
+
+            <div class="search-info" id="searchInfo">
+                Showing all hospitals
+            </div>
+
+        </div>
+
+
+        <div class="hospital-grid" id="hospitalGrid">
+
+
+            {% for hospital in hospitals %}
+
+            <div class="hospital-card">
+
+                <div class="hospital-icon">
+                    🏥
+                </div>
+
+
+                <h3>
+                    {{ hospital.name }}
+                </h3>
+
+
+                <p>
+                    📍 {{ hospital.location }}
+                </p>
+
+
+                <div class="resource">
+
+                    <p>
+                        🛏️ Available Beds:
+                        <strong>
+                            {{ hospital.beds }}
+                        </strong>
+                    </p>
+
+
+                    <p>
+                        👨‍⚕️ Doctors:
+                        <strong>
+                            {{ hospital.doctors }}
+                        </strong>
+                    </p>
+
+
+                    <p>
+                        💊 Medicines: {% if hospital.medicines == "Available" %}
+
+                        <span class="status">
+                            {{ hospital.medicines }}
+                        </span> {% else %}
+
+                        <span class="limited">
+                            {{ hospital.medicines }}
+                        </span> {% endif %}
+
+                    </p>
+
+
+                    <p class="phone">
+                        📞 {{ hospital.phone }}
+                    </p>
+
+                </div>
+
+
+                <a href="/hospital/{{ hospital.id }}" class="details-btn">
+                    View Hospital Details
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <div class="no-result" id="noResult">
+
+            <h3>
+                No Hospital Found
+            </h3>
+
+            <p>
+                Try searching with another hospital name or area.
+            </p>
+
+        </div>
+
+
+        <a href="/" class="back">
+            ← Back to Home
+        </a>
+
+    </div>
+
+
+    <footer>
+
+        <p>
+            <strong>TECH4LIFE</strong>
+        </p>
+
+        <p>
+            Smart Health Management & Blood Bank Dashboard
+        </p>
+
+        <p>
+            Making every second count in healthcare.
+        </p>
+
+    </footer>
+
+
+    <script>
+        function searchHospitals() {
+
+            let input = document
+                .getElementById("hospitalSearch")
+                .value
+                .toLowerCase();
+
+            let cards = document
+                .getElementById("hospitalGrid")
+                .getElementsByClassName("hospital-card");
+
+            let found = 0;
+
+            for (let i = 0; i < cards.length; i++) {
+
+                let text = cards[i].innerText.toLowerCase();
+
+                if (text.includes(input)) {
+
+                    cards[i].style.display = "block";
+
+                    found++;
+
+                } else {
+
+                    cards[i].style.display = "none";
+
+                }
+
+            }
+
+
+            let noResult = document.getElementById("noResult");
+
+            let searchInfo = document.getElementById("searchInfo");
+
+
+            if (found === 0) {
+
+                noResult.style.display = "block";
+
+                searchInfo.innerText =
+                    "No hospitals found for your search.";
+
+            } else {
+
+                noResult.style.display = "none";
+
+                if (input === "") {
+
+                    searchInfo.innerText =
+                        "Showing all hospitals";
+
+                } else {
+
+                    searchInfo.innerText =
+                        "Found " + found + " hospital(s)";
+
+                }
+
+            }
+
+        }
+    </script>
+
+
+</body>
+
+</html>
