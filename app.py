@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
+import os
 
 app = Flask(__name__)
 app.secret_key = "tech4life_admin_secret_key"
@@ -68,6 +69,17 @@ def create_database():
             specialization TEXT NOT NULL,
             hospital TEXT NOT NULL,
             location TEXT NOT NULL
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS sos_alerts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            latitude REAL NOT NULL,
+            longitude REAL NOT NULL,
+            message TEXT DEFAULT 'Emergency assistance requested',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            status TEXT DEFAULT 'Received by Tech4Life'
         )
     """)
 
@@ -463,6 +475,44 @@ def medicines():
 @app.route("/nearby")
 def nearby():
     return render_template("nearby.html")
+
+
+@app.route("/hospital-tracking")
+def hospital_tracking():
+    return render_template("hospital_tracking.html")
+
+
+@app.route("/api/sos", methods=["POST"])
+def create_sos_alert():
+    """Store an SOS request and return a receipt.
+
+    This records the request in Tech4Life; it does not automatically notify
+    hospitals. A verified hospital notification integration is required.
+    """
+    data = request.get_json(silent=True) or {}
+    try:
+        latitude = float(data.get("latitude"))
+        longitude = float(data.get("longitude"))
+    except (TypeError, ValueError):
+        return jsonify({"ok": False, "message": "Valid location coordinates are required."}), 400
+
+    if not (-90 <= latitude <= 90 and -180 <= longitude <= 180):
+        return jsonify({"ok": False, "message": "Location coordinates are out of range."}), 400
+
+    conn = get_db_connection()
+    cursor = conn.execute(
+        "INSERT INTO sos_alerts (latitude, longitude, message) VALUES (?, ?, ?)",
+        (latitude, longitude, "Emergency assistance requested")
+    )
+    alert_id = cursor.lastrowid
+    conn.commit()
+    conn.close()
+
+    return jsonify({
+        "ok": True,
+        "alert_id": alert_id,
+        "message": "SOS request has been recorded in Tech4Life."
+    }), 201
 
 
 @app.route("/request-blood", methods=["GET", "POST"])
@@ -1402,6 +1452,16 @@ def delete_doctor(doctor_id):
     conn.close()
 
     return redirect("/admin")
+
+
+@app.route("/admin/sos")
+def admin_sos():
+    if not session.get("admin_logged_in"):
+        return redirect("/admin/login")
+    conn = get_db_connection()
+    alerts = conn.execute("SELECT * FROM sos_alerts ORDER BY id DESC LIMIT 100").fetchall()
+    conn.close()
+    return render_template("admin_sos.html", alerts=alerts)
 
 
 @app.route("/admin/logout")

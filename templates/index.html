@@ -1,288 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech4Life - Smart Health Management</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        
-        body {
-            background: #f5f9fc;
-            color: #1f2937;
-        }
-        
-        nav {
-            background: #0b5ed7;
-            padding: 15px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .logo {
-            color: white;
-            font-size: 25px;
-            font-weight: bold;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 15px;
-        }
-        
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-        
-        .hero {
-            text-align: center;
-            padding: 65px 20px;
-            background: linear-gradient(135deg, #e8f3ff, #ffffff);
-        }
-        
-        .hero h1 {
-            font-size: 42px;
-            color: #0b5ed7;
-            margin-bottom: 15px;
-        }
-        
-        .hero p {
-            max-width: 750px;
-            margin: auto;
-            font-size: 18px;
-            line-height: 1.6;
-            color: #4b5563;
-        }
-        
-        .hero-buttons {
-            margin-top: 25px;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: #0b5ed7;
-            color: white;
-            text-decoration: none;
-            padding: 12px 22px;
-            border-radius: 8px;
-            margin: 5px;
-            font-weight: bold;
-        }
-        
-        .btn:hover {
-            background: #084298;
-        }
-        
-        .admin-btn {
-            background: #212529;
-        }
-        
-        .admin-btn:hover {
-            background: #000000;
-        }
-        
-        .services {
-            padding: 50px 7%;
-        }
-        
-        .services h2 {
-            text-align: center;
-            color: #0b5ed7;
-            margin-bottom: 35px;
-            font-size: 30px;
-        }
-        
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-        
-        .service-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: 0.2s;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-4px);
-        }
-        
-        .service-card h3 {
-            color: #0b5ed7;
-            margin-bottom: 10px;
-        }
-        
-        .service-card p {
-            color: #6b7280;
-            margin-bottom: 18px;
-            line-height: 1.5;
-        }
-        
-        .service-card a {
-            display: inline-block;
-            text-decoration: none;
-            background: #0b5ed7;
-            color: white;
-            padding: 9px 16px;
-            border-radius: 6px;
-        }
-        
-        .emergency {
-            margin: 20px 7% 50px;
-            background: #fff3f3;
-            border: 1px solid #ffcccc;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .emergency h2 {
-            color: #dc3545;
-            margin-bottom: 10px;
-        }
-        
-        .emergency p {
-            margin-bottom: 18px;
-            color: #555;
-        }
-        
-        footer {
-            background: #0b5ed7;
-            color: white;
-            text-align: center;
-            padding: 18px;
-            margin-top: 20px;
-        }
-        
-        @media (max-width: 700px) {
-            nav {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .hero h1 {
-                font-size: 32px;
-            }
-            .hero p {
-                font-size: 16px;
-            }
-            .nav-links {
-                justify-content: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech4Life | Smart Healthcare, Faster Help</title>
+<style>
+:root{--navy:#102a43;--blue:#1769aa;--teal:#13a89e;--pale:#edf7fb;--muted:#5d7182;--red:#df3548}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,Arial,sans-serif;background:#f7fbfd;color:var(--navy);line-height:1.6}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 7%;background:#fff;box-shadow:0 3px 18px #1232;gap:20px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:800;color:var(--blue);letter-spacing:-.7px}.logo span{color:var(--teal)}
+.nav-links{display:flex;gap:19px;flex-wrap:wrap}.nav-links a{color:#345;text-decoration:none;font-size:14px;font-weight:650}.nav-links a:hover{color:var(--teal)}
+.hero{padding:76px 7% 68px;background:radial-gradient(circle at 85% 20%,#c8f1ed 0,transparent 28%),linear-gradient(120deg,#eaf5ff,#f7fffe);display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:45px}
+.eyebrow{display:inline-block;background:#d8f4f0;color:#087d76;padding:7px 13px;border-radius:30px;font-size:12px;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
+.hero h1{font-size:clamp(36px,5vw,58px);line-height:1.08;margin:18px 0;color:#102a43;letter-spacing:-1.8px}.hero h1 span{color:var(--blue)}.hero p{max-width:620px;color:var(--muted);font-size:17px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.btn{display:inline-block;padding:13px 20px;border-radius:11px;text-decoration:none;font-weight:750;border:0;cursor:pointer;font-size:14px}.primary{background:var(--blue);color:#fff}.secondary{background:#fff;color:var(--blue);border:1px solid #c8dce9}.sos{background:var(--red);color:white;box-shadow:0 8px 20px #df354833}.hero-card{background:#fff;border:1px solid #e2edf2;padding:28px;border-radius:24px;box-shadow:0 18px 55px #17476614}.hero-card .big-icon{font-size:46px}.hero-card h3{font-size:22px;margin:10px 0}.hero-card p{font-size:14px}.quick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}.quick div{background:#f1f8fb;padding:13px;border-radius:12px;font-size:13px;font-weight:700}.quick b{display:block;color:var(--teal);font-size:18px}
+.section{padding:65px 7%}.section-head{text-align:center;margin-bottom:32px}.section-head h2{font-size:32px;margin-bottom:8px}.section-head p{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.card{background:#fff;border:1px solid #e5eef3;border-radius:17px;padding:23px;box-shadow:0 8px 28px #173e5810;transition:.2s}.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px #173e5818}.icon{font-size:29px}.card h3{margin:12px 0 6px}.card p{color:var(--muted);font-size:14px;min-height:46px}.card a{display:inline-block;margin-top:16px;color:var(--blue);font-weight:800;text-decoration:none}
+.tracking{margin:0 7% 60px;padding:34px;border-radius:22px;background:#103b5b;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:25px;flex-wrap:wrap}.tracking p{color:#d4e6f1;max-width:650px}.tracking h2{font-size:27px;margin-bottom:7px}
+.emergency{margin:0 7% 60px;background:#fff3f4;border:1px solid #ffd5da;border-radius:20px;padding:30px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.emergency h2{color:#b92135}.emergency p{color:#6f4a50}
+footer{background:#102a43;color:#d8e7ef;text-align:center;padding:24px;font-size:13px}
+#sos-status{display:none;margin-top:15px;padding:13px;background:#fff;border-radius:10px;color:#243b53;font-size:14px}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:52px}.nav-links{gap:12px}.tracking,.emergency{margin-left:4%;margin-right:4%}}
+</style>
 </head>
-
 <body>
-
-    <nav>
-        <div class="logo">Tech4Life</div>
-
-        <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="/hospitals">Hospitals</a>
-            <a href="/blood-bank">Blood Bank</a>
-            <a href="/beds">Beds</a>
-            <a href="/doctors">Doctors</a>
-            <a href="/medicines">Medicines</a>
-            <a href="/nearby">Nearby</a>
-            <a href="/admin/login">Admin Login</a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <h1>Smart Health Management</h1>
-
-        <p>
-            Tech4Life is a smart healthcare dashboard that helps users find hospitals, check available beds, view doctors and medicines, and check blood availability from one simple platform.
-        </p>
-
-        <div class="hero-buttons">
-            <a href="/hospitals" class="btn">Find Hospitals</a>
-            <a href="/blood-bank" class="btn">Check Blood Availability</a>
-            <a href="/admin/login" class="btn admin-btn">Admin Login</a>
-        </div>
-    </section>
-
-    <section class="services">
-
-        <h2>Our Services</h2>
-
-        <div class="service-grid">
-
-            <div class="service-card">
-                <h3>🏥 Hospitals</h3>
-                <p>Find hospitals and view their available resources.</p>
-                <a href="/hospitals">View Hospitals</a>
-            </div>
-
-            <div class="service-card">
-                <h3>🩸 Blood Bank</h3>
-                <p>Check blood group availability and request blood.</p>
-                <a href="/blood-bank">Open Blood Bank</a>
-            </div>
-
-            <div class="service-card">
-                <h3>🛏️ Available Beds</h3>
-                <p>Check available beds in listed hospitals.</p>
-                <a href="/beds">Check Beds</a>
-            </div>
-
-            <div class="service-card">
-                <h3>👨‍⚕️ Doctors</h3>
-                <p>Find doctors by name and specialization.</p>
-                <a href="/doctors">Find Doctors</a>
-            </div>
-
-            <div class="service-card">
-                <h3>💊 Medicines</h3>
-                <p>Search medicines and check their availability.</p>
-                <a href="/medicines">View Medicines</a>
-            </div>
-
-            <div class="service-card">
-                <h3>📍 Nearby Healthcare</h3>
-                <p>Find healthcare facilities in different areas of Dehradun.</p>
-                <a href="/nearby">Find Nearby</a>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="emergency">
-        <h2>🚨 Emergency Healthcare</h2>
-
-        <p>
-            Need healthcare information quickly? Find hospitals and available healthcare resources through Tech4Life.
-        </p>
-
-        <a href="/hospitals" class="btn">Find Hospital Now</a>
-    </section>
-
-    <footer>
-        <p>© 2026 Tech4Life | Smart Health Management System</p>
-    </footer>
-
-</body>
-
-</html>
+<nav>
+ <div class="logo">Tech<span>4</span>Life</div>
+ <div class="nav-links">
+  <a href="/">Home</a><a href="/hospitals">Hospitals</a><a href="/hospital-tracking">Live Tracking</a><a href="/blood-bank">Blood Bank</a><a href="/beds">Beds</a><a href="/doctors">Doctors</a><a href="/medicines">Medicines</a><a href="/nearby">Nearby</a><a href="/admin/login">Admin</a>
+ </div>
+</nav>
+<section class="hero">
+ <div>
+  <span class="eyebrow">Your health, connected</span>
+  <h1>Healthcare help,<br><span>when it matters.</span></h1>
+  <p>Find hospitals, explore available healthcare resources and locate nearby medical facilities from one simple dashboard.</p>
+  <div class="actions"><a class="btn primary" href="/hospitals">Explore Hospitals →</a><a class="btn secondary" href="/hospital-tracking">📍 Track Nearby Hospitals</a><button class="btn sos" onclick="startSOS()">🚨 SOS Emergency</button></div>
+  <div id="sos-status" role="status" aria-live="polite"></div>
+ </div>
+ <div class="hero-card">
+  <div class="big-icon">🏥</div><h3>One place for essential health information</h3>
+  <p>Quick access to hospital details, blood availability, beds, doctors and medicines.</p>
+  <div class="quick"><div><b>📍</b>Hospital locations</div><div><b>🩸</b>Blood availability</div><div><b>🛏️</b>Bed information</div><div><b>👩‍⚕️</b>Doctor directory</div></div>
+ </div>
+</section>
+<section class="section">
+ <div class="section-head"><h2>Explore our services</h2><p>Useful healthcare information, organized in one place.</p></div>
+ <div class="grid">
+  <div class="card"><div class="icon">🏥</div><h3>Hospitals</h3><p>Browse listed hospitals and view their available resources.</p><a href="/hospitals">View hospitals →</a></div>
+  <div class="card"><div class="icon">🩸</div><h3>Blood Bank</h3><p>Check blood group availability and submit a blood request.</p><a href="/blood-bank">Open blood bank →</a></div>
+  <div class="card"><div class="icon">🛏️</div><h3>Available Beds</h3><p>See bed information recorded for listed hospitals.</p><a href="/beds">Check beds →</a></div>
+  <div class="card"><div class="icon">👨‍⚕️</div><h3>Doctors</h3><p>Find doctors by name and medical specialization.</p><a href="/doctors">Find doctors →</a></div>
+  <div class="card"><div class="icon">💊</div><h3>Medicines</h3><p>Search the medicine directory and view listed availability.</p><a href="/medicines">View medicines →</a></div>
+  <div class="card"><div class="icon">📍</div><h3>Live Hospital Tracking</h3><p>Use your location to see nearby hospitals on an interactive map.</p><a href="/hospital-tracking">Open live map →</a></div>
+ </div>
+</section>
+<section class="tracking"><div><h2>Find medical facilities around you</h2><p>Allow location access to view nearby OpenStreetMap hospital listings, see directions and contact facilities where phone details are available.</p></div><a class="btn secondary" href="/hospital-tracking">Open Hospital Map →</a></section>
+<section class="emergency"><div><h2>🚨 Need urgent help?</h2><p>SOS can record your location in Tech4Life and show nearby facilities. For an immediate emergency in India, call 112 directly.</p></div><button class="btn sos" onclick="startSOS()">Send SOS Location</button></section>
+<footer>© 2026 Tech4Life | Smart Health Management System</footer>
+<script>
+async function startSOS(){
+ const status=document.getElementById('sos-status'); status.style.display='block';
+ if(!confirm('Share your current location with Tech4Life to create an SOS record? For immediate emergency help in India, call 112.')) return;
+ if(!navigator.geolocation){status.textContent='Location is not supported by this browser. Please call 112 for immediate help.';return;}
+ status.textContent='Getting your location…';
+ navigator.geolocation.getCurrentPosition(async pos=>{
+  try{
+   const response=await fetch('/api/sos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({latitude:pos.coords.latitude,longitude:pos.coords.longitude})});
+   const result=await response.json();
+   if(!response.ok) throw new Error(result.message||'Could not record SOS.');
+   const map='https://www.google.com/maps?q='+pos.coords.latitude+','+pos.coords.longitude;
+   status.innerHTML='<strong>SOS request recorded (ID #'+result.alert_id+').</strong><br>Your location: <a target="_blank" rel="noopener" href="'+map+'">Open map</a>.<br><b>Important:</b> This demo records the request in Tech4Life; it does not automatically send alerts to hospitals. Call <a href="tel:112">112</a> for immediate emergency assistance. <a href="/hospital-tracking">Find nearby hospitals</a>.';
+  }catch(e){status.textContent=e.message+' If this is an emergency, call 112.';}
+ },()=>{status.textContent='Location permission was not granted or location is unavailable. If this is an emergency, call 112.';},{enableHighAccuracy:true,timeout:12000,maximumAge:0});
+}
+</script>
+</body></html>
